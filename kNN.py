@@ -3,6 +3,8 @@
 
 from numpy import *
 import operator
+import matplotlib
+import matplotlib.pyplot as plt
 
 
 def createDataSet():
@@ -27,12 +29,62 @@ def classify0(inX,dataSet,labels,k):
 
 
 def file2matrix(filename):
-    fr = open(filename)
+    with open("./dataset/datingTestSet2.txt") as fr:
+        arrayOLines = fr.readlines()
+        numberOLines = len(arrayOLines)
+        returnMat = zeros((numberOLines,3))
+        classLabelVector = []
+        index = 0
+        for line in arrayOLines:
+            line =  line.strip()
+            listFromLine = line.split('\t')
+            returnMat[index,:] = listFromLine[:3]
+            classLabelVector.append(int(listFromLine[-1]))
+            index += 1
+        return returnMat,classLabelVector
 
+
+def showplot(x,y):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    print(array(datingLabels))
+    ax.scatter(x,y, s=array(datingLabels) ** 3, c=10 * array(datingLabels))
+    plt.show()
+
+
+def autoNorm(dataSet):
+    minVals = dataSet.min(0)
+    maxVals = dataSet.max(0)
+    ranges = maxVals - minVals
+    m = dataSet.shape[0]
+    normDataSet = dataSet - tile(minVals,(m,1))
+    normDataSet = normDataSet/tile(ranges,(m,1))
+    return normDataSet,ranges,minVals
+
+
+def datingClassTest():
+    datingDataMat, datingLabels = file2matrix("./dataset/datingTestSet2.txt")
+    hoRatio = 0.10
+    norMat, ranges , minVals = autoNorm(datingDataMat)
+    m = norMat.shape[0]
+    numOTest = int(m * hoRatio)
+    errorCount = 0.0
+    for i in range(numOTest):
+        classFierResult  =classify0(datingDataMat[i,:],datingDataMat[numOTest:,:],datingLabels[numOTest:],3)
+        print ("the classfiner come back with %d,the real answer is : %d" % (classFierResult,datingLabels[i]))
+        if classFierResult != datingLabels[i]:
+            errorCount += 1.0
+    print("errorCount: is %f" %(errorCount/float(numOTest)))
 
 
 if __name__ == '__main__':
-    # group,labels = createDataSet()
-    # classify0([0,0],group,labels,3)
-    with open("./dataset/datingTestSet2.txt") as fr:
-        print(fr.readlines())
+    '''
+    group,labels = createDataSet()
+    classify0([0,0],group,labels,3)
+    datingDataMat,datingLabels = file2matrix("./dataset/datingTestSet2.txt")
+    showplot(datingDataMat[:,0],datingDataMat[:,1])
+     datingDataMat,datingLabels = file2matrix("./dataset/datingTestSet2.txt")
+    print(autoNorm(datingDataMat))
+    '''
+    datingClassTest()
+
