@@ -10,7 +10,7 @@ import torchvision
 EPOCH = 1
 BATCH_SIZE = 50
 LR = 0.001
-DOWNLOAD_MNIST = True
+DOWNLOAD_MNIST = False
 
 train_data = torchvision.datasets.MNIST(
     root='./mnist',
@@ -75,6 +75,6 @@ for epoch in range(EPOCH):
             test_output = cnn(test_x)
             pred_y = torch.max(test_output,1)[1].data.squeeze()
             accuracy = sum(pred_y == test_y) / test_y.size(0)
-            print('Epoch:',epoch,'|train loss %.4f' %loss.data[0],'| test data accuracy %.4f' %accuracy)
+            print('Epoch:',epoch,' |train loss %.4f' %loss.data[0], ' | test data accuracy %.4f' %accuracy)
 
 print(output,b_y)
