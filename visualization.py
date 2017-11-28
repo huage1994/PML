@@ -1,6 +1,4 @@
 import numpy as np
-import torch
-from torch.autograd import Variable
 import matplotlib.pyplot as plt
 
 
@@ -28,9 +26,16 @@ plt.show()
 plt.close()
 '''
 
+x = np.linspace(-1,1,50) *3
+y1 = x*2 +1
+
+y1[25] = 0
+
+y2 = x**2
+
 
 plt.figure()
 
-plt.subplot(311)
-plt.plot([0,1],[0,1])
+plt.plot(x,y1)
+plt.plot(x,y2,color='yellow',linewidth=1.0)    # ,linestyle='--'
 plt.show()

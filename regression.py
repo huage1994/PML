@@ -20,17 +20,14 @@ class Net(torch.nn.Module):
         self.out = torch.nn.Linear(n_hidden,n_out)
 
     def forward(self, x):
-        x = F.relu(self.hidden(x))
-        x = self.out(x)
+        x = self.hidden(x)
+        x = self.out(F.relu(x))
         return x
-
 
 net = Net(1,10,1)
 
 loss_func = torch.nn.MSELoss()
-
 optimizer = torch.optim.SGD(net.parameters(),lr=0.3)
-
 
 
 plt.ion()
