@@ -88,3 +88,88 @@ if __name__ == '__main__':
     '''
     datingClassTest()
 
+
+
+
+'''sklearn version
+
+# coding: utf-8
+
+# In[2]:
+
+
+import numpy as np
+
+
+# In[3]:
+
+
+from sklearn import datasets
+
+
+# In[4]:
+
+
+from sklearn.cross_validation import train_test_split
+
+
+# In[5]:
+
+
+from sklearn.neighbors import KNeighborsClassifier
+
+
+# In[6]:
+
+
+iris = datasets.load_iris()
+
+
+# In[7]:
+
+
+x_iris = iris.data
+
+
+# In[8]:
+
+
+y_iris = iris.target
+
+
+# In[11]:
+
+
+x_train, x_test,y_train,y_test = train_test_split(x_iris,y_iris,test_size=0.3)
+
+
+# In[12]:
+
+
+knn = KNeighborsClassifier()
+
+
+# In[13]:
+
+
+knn.fit(x_train,y_train)
+
+
+# In[15]:
+
+
+result_1 = knn.predict(x_test)
+result_2 = y_test
+
+
+# In[24]:
+
+
+num = 0
+for x,y in zip(result_1,result_2):
+    if x!=y:
+        num +=1
+        print (x,y)
+print(num/len(result_1))
+
+'''

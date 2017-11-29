@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import torch
 
 
 x = np.linspace(-5,5,200)
-print (x)
+x = torch.from_numpy(x)
+x = x.type(torch.FloatTensor)
+print (torch.unsqueeze(x,1))
 
 
 # visulization
@@ -33,6 +36,9 @@ y1[25] = 0
 
 y2 = x**2
 
+y3 = torch.randn(100,1)
+y3 = torch.cat((y3,y3+1),1)
+print(y3)
 
 plt.figure()
 

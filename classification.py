@@ -27,7 +27,7 @@ print(torch.cat((z,z),1))
 
 class Net(torch.nn.Module):
     def __init__(self,n_feature,n_hidden,n_out):
-        super(Net,self).__init__()
+        super().__init__()
         self.hidden = torch.nn.Linear(n_feature,n_hidden)
         self.out = torch.nn.Linear(n_hidden,n_out)
 
@@ -54,12 +54,11 @@ for epoch in range(300):
 
     if epoch%5 == 0:
         plt.cla()
-        # 过了一道 softmax 的激励函数后的最大概率才是预测值
         prediction = torch.max(F.softmax(out), 1)[1]
         pred_y = prediction.data.numpy().squeeze()
         target_y = y.data.numpy()
         plt.scatter(x.data.numpy()[:, 0], x.data.numpy()[:, 1], c=pred_y, s=100, lw=0, cmap='RdYlGn')
-        accuracy = sum(pred_y == target_y) / 200  # 预测中有多少和真实值一样
+        accuracy = sum(pred_y == target_y) / 200
         plt.text(0.5, -4,'%d ,Accuracy=%.2f' % (epoch,accuracy), fontdict={'size': 20, 'color': 'red'})
         plt.pause(0.1)
 
