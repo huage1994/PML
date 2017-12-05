@@ -24,29 +24,60 @@ class Net(torch.nn.Module):
         x = self.out(F.relu(x))
         return x
 
-net = Net(1,10,1)
 
-loss_func = torch.nn.MSELoss()
-optimizer = torch.optim.SGD(net.parameters(),lr=0.3)
+def save():
+    net = Net(1,10,1)
+
+    loss_func = torch.nn.MSELoss()
+    optimizer = torch.optim.SGD(net.parameters(),lr=0.3)
 
 
-plt.ion()
-plt.show()
+    plt.ion()
+    plt.show()
 
-for epoch in range(300):
-    prediction = net(x)
-    loss = loss_func(prediction,y)
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+    for epoch in range(300):
+        prediction = net(x)
+        loss = loss_func(prediction,y)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
-    if epoch%5 == 0:
-        plt.cla()
-        plt.scatter(x.data.numpy(),y.data.numpy())
-        plt.plot(x.data.numpy(),prediction.data.numpy(),'r-',lw=5)
-        plt.text(0.44,0, '%d loss=%.4f'% (epoch,loss.data[0]),fontdict={'size':20,'color':'red'} )
-        plt.pause(0.1)
+        if epoch%5 == 0:
+            plt.cla()
+            plt.scatter(x.data.numpy(),y.data.numpy())
+            plt.plot(x.data.numpy(),prediction.data.numpy(),'r-',lw=5)
+            plt.text(0.44,0, '%d loss=%.4f'% (epoch,loss.data[0]),fontdict={'size':20,'color':'red'} )
+            plt.pause(0.1)
 
-plt.ioff()
-plt.show()
+    plt.ioff()
+    plt.close()
+    torch.save(net.state_dict(),'./dataset/net_state.pkl')
+
+
+def load():
+    net = torch.load('./dataset/net.pkl')
+    predict = net(x)
+    plt.figure()
+    plt.scatter(x.data.numpy(), y.data.numpy())
+    plt.plot(x.data.numpy(), predict.data.numpy(), 'r-', lw=5)
+
+    plt.show()
+
+
+def load_fromstate():
+    net = Net(1, 10, 1)
+    net.load_state_dict(torch.load('./dataset/net_state.pkl'))
+    predict = net(x)
+    plt.figure()
+    plt.scatter(x.data.numpy(), y.data.numpy())
+    plt.plot(x.data.numpy(), predict.data.numpy(), 'r-', lw=5)
+
+    plt.show()
+
+
+if __name__ == '__main__':
+    load_fromstate()
+
+
+
 
