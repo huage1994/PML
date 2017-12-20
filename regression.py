@@ -4,7 +4,9 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
 x = torch.linspace(-1,1,100)
+print(x)
 x = torch.unsqueeze(x,1)
+print(x)
 
 y = x **2 + torch.rand([100,1]) * 0.2
 
