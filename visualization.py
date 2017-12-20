@@ -92,18 +92,28 @@ y = x**2 +1
 
 
 plt.figure(figsize=(5,5))
-plt.plot(x,y-1,color='yellow',linewidth=1.0)
-plt.plot(x,y,color='red',linewidth=1.0)
-plt.plot(x,y+1,linewidth=1.0)
+l1, = plt.plot(x,y-1,color='yellow',linewidth=1.0,label='down')
+l2, = plt.plot(x,y,color='red',linewidth=1.0)
+l3, = plt.plot(x,y+1,linewidth=1.0,label='up')
+plt.legend(handles=[l1,l2,l3,], labels =['1','2','eat'], loc='best')
 
 plt.figure(figsize=(6,6))
-plt.plot(x,y+1,linewidth=10.0)
+plt.plot(x,y+1,linewidth=5.0)
 plt.xlim((-2,2))
 plt.ylim((0,6))
 plt.xlabel('I am boy')
 plt.ylabel('I am girl')
 plt.xticks(np.linspace(-2,2,5))
 plt.yticks(np.linspace(0,6,3),[r'$bad\ \alpha$','$test$','good'])
+
+# plt.text(-2,3,s=' wo hsi ni baba',fontdict={'size':16,'color':'r'})
+# plt.scatter(1,3,s=100,c='red')
+# plt.plot([2,1],[2,3],'k--',lw=2.5)
+x0 = 1
+y0 = x0**2+2
+plt.annotate(r'$2x+1=%s$' % y0, xy=(x0, y0), xycoords='data', xytext=(+30, -30),
+             textcoords='offset points', fontsize=16,
+             arrowprops=dict(arrowstyle='->', connectionstyle="arc3,rad=.2"))
 
 ###axis 2
 ax = plt.gca()   #
