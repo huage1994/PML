@@ -78,7 +78,7 @@ def load_fromstate():
 
 
 if __name__ == '__main__':
-    load_fromstate()
+    save()
 
 
 
